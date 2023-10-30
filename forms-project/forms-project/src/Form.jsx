@@ -22,16 +22,38 @@ function Form() {
     });
 
 
+    const onSubmit = e => {
+        e.preventDefault(); 
+
+        const userInfo = {
+            user
+        }
+
+        console.log(userInfo)
+
+        setUser("");
+    }
+
+    const handleChange = (key) => {
+        return (e) => {
+            console.log(e)
+            const newObj = Object.assign({}, user, {[key]: e.target.value})
+            setUser(newObj)
+        }
+    }
+
+
     return (
         <div>
             <h1>Sign Up</h1>
 
-            <form>
+            <form onSubmit={onSubmit}>
                 <div>
                     <label htmlFor="name">Name:</label>
                     <input 
                         id='name'
                         type="text" 
+                        onChange={handleChange("name")}
                         value={user.name}/>
                 </div>
                 <div>
@@ -39,6 +61,7 @@ function Form() {
                     <input 
                         id='email'
                         type="text" 
+                        onChange={handleChange("email")}
                         value={user.email}/>
                 </div>
                 <div>
@@ -46,11 +69,13 @@ function Form() {
                     <input 
                         id='phone'
                         type="text" 
+                        onChange={handleChange("phone")}
                         value={user.phone}/>
                 </div>
                 <div>
                     <label htmlFor="phoneType">PhoneType:</label>
                     <select 
+                        onChange={handleChange("phoneType")}
                         id='phoneType'
                         value={user.phoneType}>
                         <option value="home">Home</option>
@@ -61,14 +86,26 @@ function Form() {
                 <div>
                     <label htmlFor="staff">Staff:</label>
                     <input 
+                        onChange={handleChange("staff")}
                         name='staff'
                         type="radio" 
-                        value="instructor"/>
+                        value="instructor"/> Instructor
                     <input 
+                        onChange={handleChange("staff")}
                         name='staff'
                         type="radio" 
-                        value="student"/>
+                        value="student"/> Student
                 </div>
+                <div> 
+                    <label htmlFor="bio">Bio:</label>
+                    <textarea name="bio" id="bio" cols="30" rows="10" onChange={handleChange("bio")}></textarea>
+                </div>
+
+                <div>
+                    <label htmlFor="signUp">Email Notifications</label>
+                    <input type="checkbox" id="signUp" name="signUp" value="yes" onChange={handleChange("signUp")}/>
+                </div>
+                <button>Submit</button>
             </form>
         </div>
     )
